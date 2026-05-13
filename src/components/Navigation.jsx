@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import gsap from 'gsap'
+import { useNavigate, useLocation } from 'react-router-dom'
 import logoImg from '../assets/Trans-logo.png';
 const navLinks = [
   { label: 'Journey', href: '#journey' },
@@ -12,6 +13,8 @@ const navLinks = [
 export default function Navigation() {
   const navRef = useRef(null)
   const [scrolled, setScrolled] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     gsap.fromTo(navRef.current,
@@ -26,6 +29,10 @@ export default function Navigation() {
 
   const handleAnchor = (e, href) => {
     e.preventDefault()
+    if (location.pathname !== '/') {
+      window.location.href = '/' + href;
+      return;
+    }
     const el = document.querySelector(href)
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
@@ -71,7 +78,7 @@ export default function Navigation() {
               display: 'block',
               cursor: 'pointer',
             }}
-            onClick={(e) => handleAnchor(e, '#')}
+            onClick={(e) => handleAnchor(e, '#home')}
           />
 
           {/* Links - desktop */}
@@ -93,7 +100,7 @@ export default function Navigation() {
           <a
             href="#cta"
             onClick={(e) => handleAnchor(e, '#cta')}
-            className="btn-luxury btn-luxury-filled hidden md:inline-flex text-xs"
+            className="btn-luxury btn-luxury-filled !hidden md:!inline-flex text-xs"
             style={{ padding: '0.55rem 1.4rem' }}
           >
             Start Journey
@@ -183,6 +190,16 @@ function MobileMenu({ navLinks, handleAnchor }) {
               {link.label}
             </a>
           ))}
+          <div className="pt-2 mt-2 border-t border-[rgba(200,169,126,0.15)] flex">
+            <a
+              href="#cta"
+              onClick={(e) => { setOpen(false); handleAnchor(e, '#cta') }}
+              className="btn-luxury btn-luxury-filled w-full flex justify-center text-sm"
+              style={{ padding: '0.8rem 1.4rem' }}
+            >
+              Start Journey
+            </a>
+          </div>
         </div>
       </motion.div>
     </div>

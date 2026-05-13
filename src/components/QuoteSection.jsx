@@ -13,60 +13,77 @@ export default function QuoteSection() {
   const bgRef = useRef(null)
 
   useEffect(() => {
-    // Background parallax zoom
-    gsap.fromTo(bgRef.current,
-      { scale: 1 },
-      {
-        scale: 1.08,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 2,
-        },
+    let ctx = gsap.context(() => {
+      // Background parallax zoom
+      gsap.fromTo(bgRef.current,
+        { scale: 1 },
+        {
+          scale: 1.08,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 2,
+          },
+        }
+      )
+
+      // Letter reveal for main quote
+      const quote = quoteRef.current
+      if (quote) {
+        // Split by <br> to preserve intentional line breaks
+        const lines = quote.innerHTML.split(/<br\s*\/?>/i);
+        
+        quote.innerHTML = lines.map(line => {
+          // Use a temp element to decode HTML entities and strip tags
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = line;
+          const cleanText = tempDiv.textContent.trim();
+          if (!cleanText) return '';
+          
+          const words = cleanText.split(/\s+/);
+          return words.map(word => {
+            const chars = word.split('').map(char => 
+              `<span class="char" style="display:inline-block;transform:translateY(80px);opacity:0">${char}</span>`
+            ).join('');
+            // Wrap each word in an inline-block to prevent mid-word breaking
+            return `<span class="word" style="display:inline-block; white-space:nowrap">${chars}</span>`;
+          }).join('<span class="space" style="display:inline-block;width:0.3em">&nbsp;</span>');
+        }).join('<br />');
+
+        const spans = quote.querySelectorAll('.char')
+        gsap.to(spans, {
+          y: 0,
+          opacity: 1,
+          stagger: 0.02,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 65%',
+          },
+        })
       }
-    )
 
-    // Letter reveal for main quote
-    const quote = quoteRef.current
-    if (quote) {
-      const text = quote.textContent
-      quote.innerHTML = text.split('').map(char =>
-        char === ' '
-          ? '<span style="display:inline-block;width:0.3em"> </span>'
-          : `<span style="display:inline-block;transform:translateY(80px);opacity:0">${char}</span>`
-      ).join('')
+      // Sub text
+      gsap.fromTo([subRef.current, sigRef.current],
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.2,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 55%',
+          },
+        }
+      )
+    }, sectionRef)
 
-      const spans = quote.querySelectorAll('span')
-      gsap.to(spans, {
-        y: 0,
-        opacity: 1,
-        stagger: 0.02,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 65%',
-        },
-      })
-    }
-
-    // Sub text
-    gsap.fromTo([subRef.current, sigRef.current],
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        stagger: 0.2,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 55%',
-        },
-      }
-    )
+    return () => ctx.revert()
   }, [])
 
   return (
@@ -85,7 +102,7 @@ export default function QuoteSection() {
         style={{
           position: 'absolute',
           inset: '-10%',
-          background: 'radial-gradient(ellipse at 50% 50%, #2A1A0E 0%, #1A1008 40%, var(--charcoal) 80%)',
+          background: 'linear-gradient(180deg, var(--charcoal) 0%, #1F1A16 100%)',
         }}
       />
 
@@ -93,6 +110,7 @@ export default function QuoteSection() {
       <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
         <ParticleField count={40} color="#A0522D" opacity={0.3} />
       </div>
+
 
       {/* Decorative lines */}
       <div
@@ -129,19 +147,20 @@ export default function QuoteSection() {
           padding: '0 clamp(1.5rem, 5vw, 4rem)',
         }}
       >
-        {/* Opening mark */}
+        {/* Section Heading */}
         <div
           style={{
-            fontFamily: '"Playfair Display", serif',
-            fontSize: 'clamp(4rem, 8vw, 7rem)',
+            fontFamily: '"Cormorant Garamond", serif',
+            fontSize: 'clamp(0.85rem, 1.5vw, 1rem)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.3em',
             color: 'var(--sienna)',
-            opacity: 0.3,
-            lineHeight: 0.5,
-            marginBottom: '2rem',
+            marginBottom: '1rem',
             display: 'block',
+            fontWeight: 600,
           }}
         >
-          "
+          Our Philosophy
         </div>
 
         <blockquote
@@ -154,10 +173,12 @@ export default function QuoteSection() {
             color: 'var(--cashmere)',
             lineHeight: 1.25,
             marginBottom: '2.5rem',
+            wordBreak: 'normal',
+            overflowWrap: 'break-word',
             letterSpacing: '-0.01em',
           }}
         >
-          Every journey changes something within us.
+          Every journey changes <br />something within us.
         </blockquote>
 
         <p
@@ -196,7 +217,7 @@ export default function QuoteSection() {
               color: 'var(--gold)',
             }}
           >
-            — Christiane
+            Christiane
           </span>
           <div style={{ width: '2.5rem', height: '1px', background: 'var(--sienna)' }} />
         </div>

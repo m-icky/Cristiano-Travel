@@ -103,7 +103,7 @@ export default function LoadingScreen({ onComplete }) {
         className="absolute bottom-12 text-xs tracking-[0.2em] uppercase"
         style={{ color: 'rgba(200,169,126,0.4)' }}
       >
-        ✦ India · Wellness · Transformation
+        ✦ India · Wellness · Transformation ✦
       </div>
     </motion.div>
   )

@@ -12,7 +12,11 @@ import TimelineSection from './components/TimelineSection'
 import QuoteSection from './components/QuoteSection'
 import GallerySection from './components/GallerySection'
 import CTASection from './components/CTASection'
+import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
+import FloatingWhatsApp from './components/FloatingWhatsApp'
+import NadijodtheshmPage from './components/NadijodtheshmPage'
+import { Routes, Route } from 'react-router-dom'
 
 import useCursor from './hooks/useCursor'
 import useLenis from './hooks/useLenis'
@@ -57,15 +61,24 @@ export default function App() {
           <Navigation />
 
           <main>
-            <VideoScrollSection />
-            <FounderSection />
-            <TimelineSection />
-            <QuoteSection />
-            <GallerySection />
-            <CTASection />
+            <Routes>
+              <Route path="/" element={
+                <>
+                  <VideoScrollSection />
+                  <FounderSection />
+                  <TimelineSection />
+                  <QuoteSection />
+                  <GallerySection />
+                  <CTASection />
+                  <ContactSection />
+                </>
+              } />
+              <Route path="/nadijodtheshm" element={<NadijodtheshmPage />} />
+            </Routes>
           </main>
 
           <Footer />
+          <FloatingWhatsApp />
         </>
       )}
     </>

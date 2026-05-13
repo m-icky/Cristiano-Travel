@@ -2,39 +2,45 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import ParticleField from './ParticleField'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const ctaButtons = [
-  { label: 'Plan Your India Trip', icon: '→', href: 'mailto:hello@cristianotravel.com?subject=India Trip Enquiry' },
-  { label: 'Study Abroad Enquiry', icon: '→', href: 'mailto:hello@cristianotravel.com?subject=Study Abroad Enquiry' },
-  { label: 'Book Nadijodtheshm Consultation', icon: '✦', href: 'mailto:hello@cristianotravel.com?subject=Nadijodtheshm Consultation' },
+  { label: 'Plan Your India Trip', icon: '→', href: 'mailto:hello@cristianotravel.com?subject=India Trip Enquiry&body=Hello Cristiano Travel Team,%0D%0A%0D%0AI would like to inquire about planning an India trip.%0D%0A%0D%0AName: %0D%0AContact Number: %0D%0APreferred Travel Dates: %0D%0ANumber of Travelers: %0D%0A%0D%0APlease let me know how we can proceed.' },
+  { label: 'Study Abroad Enquiry', icon: '→', href: 'mailto:hello@cristianotravel.com?subject=Study Abroad Enquiry&body=Hello Cristiano Travel Team,%0D%0A%0D%0AI am reaching out to get more information about your Study Abroad programs.%0D%0A%0D%0AName: %0D%0AContact Number: %0D%0ACurrent Education Level: %0D%0APreferred Country/Course: %0D%0A%0D%0APlease provide me with more details.' },
+  { label: 'Book Nadijodtheshm Consultation', icon: '✦', route: '/nadijodtheshm' },
 ]
 
 export default function CTASection() {
   const sectionRef = useRef(null)
   const contentRef = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const children = contentRef.current?.children
-    if (!children) return
+    let ctx = gsap.context(() => {
+      const children = contentRef.current?.children
+      if (!children) return
 
-    gsap.fromTo(
-      Array.from(children),
-      { y: 50, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        stagger: 0.15,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 65%',
-        },
-      }
-    )
+      gsap.fromTo(
+        Array.from(children),
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.15,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 65%',
+          },
+        }
+      )
+    }, sectionRef)
+
+    return () => ctx.revert()
   }, [])
 
   return (
@@ -134,7 +140,8 @@ export default function CTASection() {
           {ctaButtons.map((btn, i) => (
             <motion.a
               key={btn.label}
-              href={btn.href}
+              href={btn.href || btn.route}
+              onClick={btn.route ? (e) => { e.preventDefault(); navigate(btn.route); } : undefined}
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.25 }}

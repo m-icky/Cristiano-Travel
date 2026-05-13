@@ -35,72 +35,76 @@ export default function FounderSection() {
   const headingRef = useRef(null)
 
   useEffect(() => {
-    const section = sectionRef.current
+    let ctx = gsap.context(() => {
+      const section = sectionRef.current
 
-    // Image parallax
-    gsap.to(imgRef.current, {
-      yPercent: -15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1.5,
-      },
-    })
+      // Image parallax
+      gsap.to(imgRef.current, {
+        yPercent: -15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.5,
+        },
+      })
 
-    // Text reveal
-    const lines = textRef.current?.querySelectorAll('.reveal-line')
-    if (lines) {
-      gsap.fromTo(lines,
-        { y: '100%', opacity: 0 },
-        {
-          y: '0%',
-          opacity: 1,
-          stagger: 0.08,
-          duration: 1.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: textRef.current,
-            start: 'top 75%',
-          },
-        }
-      )
-    }
+      // Text reveal
+      const lines = textRef.current?.querySelectorAll('.reveal-line')
+      if (lines) {
+        gsap.fromTo(lines,
+          { y: '100%', opacity: 0 },
+          {
+            y: '0%',
+            opacity: 1,
+            stagger: 0.08,
+            duration: 1.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: textRef.current,
+              start: 'top 75%',
+            },
+          }
+        )
+      }
 
-    // Cards stagger
-    cardsRef.current.forEach((card, i) => {
-      if (!card) return
-      gsap.fromTo(card,
-        { y: 60, opacity: 0 },
+      // Cards stagger
+      cardsRef.current.forEach((card, i) => {
+        if (!card) return
+        gsap.fromTo(card,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 85%',
+            },
+            delay: i * 0.12,
+          }
+        )
+      })
+
+      // Heading
+      gsap.fromTo(headingRef.current,
+        { y: 40, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1,
+          duration: 1.2,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: card,
-            start: 'top 85%',
+            trigger: headingRef.current,
+            start: 'top 80%',
           },
-          delay: i * 0.12,
         }
       )
-    })
+    }, sectionRef)
 
-    // Heading
-    gsap.fromTo(headingRef.current,
-      { y: 40, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: 'top 80%',
-        },
-      }
-    )
+    return () => ctx.revert()
   }, [])
 
   return (

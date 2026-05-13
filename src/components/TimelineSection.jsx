@@ -48,7 +48,7 @@ export default function TimelineSection() {
   }))
 
   return (
-    <section id="journey" style={{ background: '#0a0807', position: 'relative', padding: '120px 0' }}>
+    <section id="journey" style={{ background: 'rgb(17, 17, 17)', position: 'relative', padding: '120px 0' }}>
       <div className="text-center relative z-10 mb-12">
         <div className="flex items-center justify-center gap-3 mb-4" style={{ opacity: 0.6 }}>
           <span style={{ display: 'block', width: '2rem', height: '1px', background: 'var(--sienna)' }} />

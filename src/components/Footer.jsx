@@ -41,7 +41,7 @@ const socialLinks = [
   },
   {
     label: 'Email',
-    href: 'mailto:hello@cristianotravel.com',
+    href: 'mailto:hello@cristianotravel.com?subject=Inquiry via Website&body=Hello Cristiano Travel Team,%0D%0A%0D%0A[Please write your message here]%0D%0A%0D%0AName: %0D%0AContact Number: %0D%0A',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -106,7 +106,7 @@ export default function Footer() {
                 marginBottom: '1.5rem',
               }}
             >
-              Guiding journeys that transform lives through authentic India experiences, student guidance, and traditional wellness.
+              Guiding journeys that transform lives through authentic India experiences and traditional wellness.
             </p>
 
             {/* Socials */}
@@ -173,7 +173,7 @@ export default function Footer() {
             </h4>
             <div className="flex flex-col gap-4">
               {[
-                { icon: '✉', text: 'hello@cristianotravel.com', href: 'mailto:hello@cristianotravel.com' },
+                { icon: '✉', text: 'hello@cristianotravel.com', href: 'mailto:hello@cristianotravel.com?subject=Inquiry via Website&body=Hello Cristiano Travel Team,%0D%0A%0D%0A[Please write your message here]%0D%0A%0D%0AName: %0D%0AContact Number: %0D%0A' },
                 { icon: '☎', text: '+91 XXXXX XXXXX', href: 'tel:+91XXXXXXXXXX' },
                 { icon: '◈', text: 'Kerala, India', href: '#' },
               ].map((contact) => (
@@ -258,7 +258,7 @@ export default function Footer() {
               textTransform: 'uppercase',
             }}
           >
-            ✦ India · Wellness · Transformation · Spirituality
+            India · Wellness · Transformation · Spirituality
           </p>
         </div>
       </div>

@@ -13,7 +13,9 @@ export default function FocusSliceCarousel({
   style = {}
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+  );
   const [isAnimating, setIsAnimating] = useState(false);
   const containerRef = useRef(null);
   const mobileScrollRef = useRef(null);
@@ -139,8 +141,9 @@ export default function FocusSliceCarousel({
               <motion.div
                 key={index}
                 onClick={() => handleSliceClick(index)}
-                style={{ position: "relative", cursor: "pointer", borderRadius, overflow: "hidden", scrollSnapAlign: "start" }}
+                initial={{ height: isActive ? "300px" : "60px" }}
                 animate={{ height: isActive ? "300px" : "60px" }}
+                style={{ position: "relative", cursor: "pointer", borderRadius, overflow: "hidden", scrollSnapAlign: "start", flexShrink: 0 }}
                 transition={transition}
               >
                 <div style={{

@@ -25,52 +25,50 @@ export default function GallerySection() {
     const track = trackRef.current
     if (!track) return
 
-    const totalWidth = track.scrollWidth - window.innerWidth
+    let ctx = gsap.context(() => {
+      const totalWidth = track.scrollWidth - window.innerWidth
 
-    const st = gsap.to(track, {
-      x: -totalWidth,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: `+=${totalWidth + window.innerHeight}`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-      },
-    })
-
-    // Heading reveal
-    gsap.fromTo(headingRef.current,
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: 'power3.out',
+      gsap.to(track, {
+        x: -totalWidth,
+        ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 70%',
+          start: 'top top',
+          end: `+=${totalWidth + window.innerHeight}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
         },
-      }
-    )
-
-    return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.vars.trigger === sectionRef.current) t.kill()
       })
-    }
+
+      // Heading reveal
+      gsap.fromTo(headingRef.current,
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 70%',
+          },
+        }
+      )
+    }, sectionRef)
+
+    return () => ctx.revert()
   }, [])
 
   return (
     <section
-      ref={sectionRef}
       id="gallery"
       style={{
         background: '#111',
         position: 'relative',
       }}
     >
+      <div ref={sectionRef}>
       {/* Header */}
       <div
         ref={headingRef}
@@ -167,6 +165,7 @@ export default function GallerySection() {
         }}
       >
         ← Scroll to explore →
+      </div>
       </div>
     </section>
   )

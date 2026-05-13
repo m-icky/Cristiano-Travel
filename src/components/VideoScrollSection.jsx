@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ParticleField from './ParticleField'
+import cristianoVideo from '../assets/cristiano.mp4'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -24,6 +25,9 @@ export default function VideoScrollSection() {
   const scrollIndicatorRef = useRef(null)
   const [framesLoaded, setFramesLoaded] = useState(false)
   const [loadProgress, setLoadProgress] = useState(0)
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  )
   const framesRef = useRef([])
   const currentFrameRef = useRef(0)
   const isUsingFrames = useRef(false)
@@ -120,12 +124,15 @@ export default function VideoScrollSection() {
     }
   }
 
-  // Canvas resize
+  // Resize handler for mobile state and canvas
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768
+      setIsMobile(mobile)
 
-    const setSize = () => {
+      const canvas = canvasRef.current
+      if (!canvas || mobile) return
+
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
       if (!isUsingFrames.current) {
@@ -134,9 +141,12 @@ export default function VideoScrollSection() {
         drawFrame(currentFrameRef.current)
       }
     }
-    setSize()
-    window.addEventListener('resize', setSize)
-    return () => window.removeEventListener('resize', setSize)
+    
+    // Initial call
+    handleResize()
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [framesLoaded])
 
   // Ref for the hero content wrapper (for left→right animation)
@@ -147,150 +157,182 @@ export default function VideoScrollSection() {
     if (!framesLoaded) return
 
     const section = sectionRef.current
-    const sticky = stickyRef.current
     const canvas = canvasRef.current
     const overlay = overlayRef.current
     const contentWrapper = contentWrapperRef.current
 
-    // Set canvas size
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    let ctx = gsap.context(() => {
+      if (!isMobile) {
+        // Set canvas size
+        if (canvas) {
+          canvas.width = window.innerWidth
+          canvas.height = window.innerHeight
 
-    // Initial draw
-    if (isUsingFrames.current && framesRef.current[0]) {
-      drawFrame(0)
-    } else {
-      drawFallback(0)
-    }
-
-    // Scroll-driven frame sequence
-    const frameObj = { frame: 0, progress: 0 }
-
-    const st = ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.5,
-      onUpdate: (self) => {
-        const progress = self.progress
-        frameObj.progress = progress
-
-        if (isUsingFrames.current) {
-          const totalFrames = framesRef.current.length - 1
-          const frame = Math.min(
-            Math.floor(progress * totalFrames),
-            totalFrames
-          )
-          if (frame !== currentFrameRef.current) {
-            currentFrameRef.current = frame
-            drawFrame(frame)
-          }
-        } else {
-          drawFallback(progress)
-        }
-
-        // Overlay opacity: darken slightly mid-scroll, lift at end
-        if (overlay) {
-          const overOpacity = 0.15 + progress * 0.35
-          overlay.style.opacity = overOpacity
-        }
-
-        // Content position: left side for first half, slide to right side at halfway
-        if (contentWrapper) {
-          // progress 0→0.5 = left side, 0.5→1 = right side
-          // Smooth transition zone between 0.35 and 0.65
-          let shiftProgress = 0
-          if (progress <= 0.35) {
-            shiftProgress = 0
-          } else if (progress >= 0.65) {
-            shiftProgress = 1
+          // Initial draw
+          if (isUsingFrames.current && framesRef.current[0]) {
+            drawFrame(0)
           } else {
-            const raw = (progress - 0.35) / 0.3
-            shiftProgress = raw * raw * (3 - 2 * raw) // smoothstep
-          }
-
-          // Calculate how far to shift: wrapper width minus inner content width
-          const innerDiv = contentWrapper.firstElementChild
-          if (innerDiv) {
-            const wrapperWidth = contentWrapper.clientWidth
-            const padding = parseFloat(getComputedStyle(contentWrapper).paddingLeft) || 0
-            const innerWidth = innerDiv.offsetWidth
-            const maxShift = wrapperWidth - innerWidth - padding * 2
-            innerDiv.style.transform = `translateX(${shiftProgress * maxShift}px)`
-            innerDiv.style.opacity = 1
-
-            // Align all flex children and text to the right when shifted
-            const isRight = shiftProgress > 0.5
-            innerDiv.style.alignItems = isRight ? 'flex-end' : 'flex-start'
-
-            // Right-align the heading text
-            const heading = headingRef.current
-            if (heading) {
-              heading.style.textAlign = isRight ? 'right' : 'left'
-            }
-
-            // Right-align the sub-paragraph text and push it right
-            const subP = subRef.current
-            if (subP) {
-              subP.style.textAlign = isRight ? 'right' : 'left'
-              subP.style.marginLeft = isRight ? 'auto' : '0'
-            }
-
-            // Right-align the label row
-            const label = labelRef.current
-            if (label) {
-              label.style.justifyContent = isRight ? 'flex-end' : 'flex-start'
-              label.style.flexDirection = isRight ? 'row-reverse' : 'row'
-            }
-
-            // Right-align the CTA buttons row
-            const cta = ctaRef.current
-            if (cta) {
-              cta.style.justifyContent = isRight ? 'flex-end' : 'flex-start'
-            }
+            drawFallback(0)
           }
         }
-      },
-    })
 
-    // Initial entrance - start immediately visible with a gentle slide up
-    gsap.from(
-      [labelRef.current, headingRef.current, subRef.current, ctaRef.current],
-      { y: 30, stagger: 0.1, duration: 1.2, ease: 'power3.out' }
-    )
+        // Scroll-driven frame sequence
+        const frameObj = { frame: 0, progress: 0 }
 
-    // Scroll indicator pulse
-    gsap.to(scrollIndicatorRef.current, {
-      y: 12,
-      opacity: 0,
-      repeat: -1,
-      yoyo: true,
-      duration: 1.2,
-      ease: 'power1.inOut',
-      delay: 4,
-    })
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.5,
+          onUpdate: (self) => {
+            const progress = self.progress
+            frameObj.progress = progress
 
-    return () => {
-      st.kill()
-      ScrollTrigger.getAll().forEach(t => t.kill())
-    }
-  }, [framesLoaded])
+            if (isUsingFrames.current) {
+              const totalFrames = framesRef.current.length - 1
+              const frame = Math.min(
+                Math.floor(progress * totalFrames),
+                totalFrames
+              )
+              if (frame !== currentFrameRef.current) {
+                currentFrameRef.current = frame
+                drawFrame(frame)
+              }
+            } else {
+              drawFallback(progress)
+            }
+
+            // Overlay opacity: darken slightly mid-scroll, lift at end
+            if (overlay) {
+              const overOpacity = 0.15 + progress * 0.35
+              overlay.style.opacity = overOpacity
+            }
+
+            // Content position: left side for first half, slide to right side at halfway
+            if (contentWrapper) {
+              // progress 0→0.5 = left side, 0.5→1 = right side
+              // Smooth transition zone between 0.35 and 0.65
+              let shiftProgress = 0
+              if (progress <= 0.35) {
+                shiftProgress = 0
+              } else if (progress >= 0.65) {
+                shiftProgress = 1
+              } else {
+                const raw = (progress - 0.35) / 0.3
+                shiftProgress = raw * raw * (3 - 2 * raw) // smoothstep
+              }
+
+              // Calculate how far to shift: wrapper width minus inner content width
+              const innerDiv = contentWrapper.firstElementChild
+              if (innerDiv) {
+                const wrapperWidth = contentWrapper.clientWidth
+                const padding = parseFloat(getComputedStyle(contentWrapper).paddingLeft) || 0
+                const innerWidth = innerDiv.offsetWidth
+                const maxShift = wrapperWidth - innerWidth - padding * 2
+                innerDiv.style.transform = `translateX(${shiftProgress * maxShift}px)`
+                innerDiv.style.opacity = 1
+
+                // Align all flex children and text to the right when shifted
+                const isRight = shiftProgress > 0.5
+                innerDiv.style.alignItems = isRight ? 'flex-end' : 'flex-start'
+
+                // Right-align the heading text
+                const heading = headingRef.current
+                if (heading) {
+                  heading.style.textAlign = isRight ? 'right' : 'left'
+                }
+
+                // Right-align the sub-paragraph text and push it right
+                const subP = subRef.current
+                if (subP) {
+                  subP.style.textAlign = isRight ? 'right' : 'left'
+                  subP.style.marginLeft = isRight ? 'auto' : '0'
+                }
+
+                // Right-align the label row
+                const label = labelRef.current
+                if (label) {
+                  label.style.justifyContent = isRight ? 'flex-end' : 'flex-start'
+                  label.style.flexDirection = isRight ? 'row-reverse' : 'row'
+                }
+
+                // Right-align the CTA buttons row
+                const cta = ctaRef.current
+                if (cta) {
+                  cta.style.justifyContent = isRight ? 'flex-end' : 'flex-start'
+                }
+              }
+            }
+          },
+        })
+      }
+
+      // Initial entrance - start immediately visible with a gentle slide up
+      gsap.from(
+        [labelRef.current, headingRef.current, subRef.current, ctaRef.current],
+        { y: 30, stagger: 0.1, duration: 1.2, ease: 'power3.out' }
+      )
+
+      if (scrollIndicatorRef.current && !isMobile) {
+        // Scroll indicator pulse
+        gsap.to(scrollIndicatorRef.current, {
+          y: 12,
+          opacity: 0,
+          repeat: -1,
+          yoyo: true,
+          duration: 1.2,
+          ease: 'power1.inOut',
+          delay: 4,
+        })
+      }
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [framesLoaded, isMobile])
 
   return (
     <section
       ref={sectionRef}
       id="home"
       className="video-scroll-section"
-      style={{ height: `${TOTAL_FRAMES * 3}vh` }}
+      style={{ height: isMobile ? '100vh' : `${TOTAL_FRAMES * 3}vh` }}
     >
-      {/* Sticky container */}
-      <div ref={stickyRef} className="frame-sequence-container">
-        {/* Canvas - frame playback */}
-        <canvas
-          ref={canvasRef}
-          className="frame-canvas"
-          style={{ zIndex: 1 }}
-        />
+      {/* Sticky container or Mobile relative container */}
+      <div 
+        ref={stickyRef} 
+        className={isMobile ? "" : "frame-sequence-container"}
+        style={isMobile ? { position: 'relative', width: '100%', height: '100%', overflow: 'hidden' } : {}}
+      >
+        {isMobile ? (
+          <video
+            src={cristianoVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 1,
+              transform: 'scale(1.06)',
+              transformOrigin: 'top left'
+            }}
+          />
+        ) : (
+          <canvas
+            ref={canvasRef}
+            className="frame-canvas"
+            style={{ 
+              zIndex: 1,
+              transform: 'scale(1.06)',
+              transformOrigin: 'top left'
+            }}
+          />
+        )}
 
         {/* Gradient overlay */}
         <div
@@ -426,39 +468,41 @@ export default function VideoScrollSection() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div
-          ref={scrollIndicatorRef}
-          style={{
-            position: 'absolute',
-            bottom: '2.5rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '0.5rem',
-          }}
-        >
-          <span
+        {/* Scroll indicator - hide on mobile */}
+        {!isMobile && (
+          <div
+            ref={scrollIndicatorRef}
             style={{
-              fontSize: '0.6rem',
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase',
-              color: 'var(--oak)',
+              position: 'absolute',
+              bottom: '2.5rem',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 10,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '0.5rem',
             }}
           >
-            Scroll
-          </span>
-          <svg width="18" height="28" viewBox="0 0 18 28" fill="none">
-            <rect x="1" y="1" width="16" height="26" rx="8" stroke="var(--oak)" strokeWidth="1"/>
-            <circle cx="9" cy="8" r="2.5" fill="var(--sienna-light)"/>
-          </svg>
-        </div>
+            <span
+              style={{
+                fontSize: '0.6rem',
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase',
+                color: 'var(--oak)',
+              }}
+            >
+              Scroll
+            </span>
+            <svg width="18" height="28" viewBox="0 0 18 28" fill="none">
+              <rect x="1" y="1" width="16" height="26" rx="8" stroke="var(--oak)" strokeWidth="1"/>
+              <circle cx="9" cy="8" r="2.5" fill="var(--sienna-light)"/>
+            </svg>
+          </div>
+        )}
 
         {/* Frame counter — only shows when no frames loaded as indicator */}
-        {!isUsingFrames.current && framesLoaded && (
+        {!isUsingFrames.current && framesLoaded && !isMobile && (
           <div
             style={{
               position: 'absolute',
