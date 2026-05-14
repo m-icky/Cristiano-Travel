@@ -1,27 +1,22 @@
-import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import FeatureFlipper from './FeatureFlipper'
 
-export default function NadijodtheshmPage() {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
+export default function NadijodtheshmSection() {
   return (
-    <div className="pt-40 pb-32 min-h-screen relative">
+    <section id="nadijodtheshm" className="py-24 relative overflow-hidden">
       {/* Decorative gradients */}
       <div
         style={{
           position: 'absolute',
-          top: '-10%',
+          top: '0%',
           left: '50%',
           transform: 'translateX(-50%)',
-          width: '60vw',
-          height: '60vw',
-          maxWidth: '700px',
-          maxHeight: '700px',
+          width: '80vw',
+          height: '80vw',
+          maxWidth: '800px',
+          maxHeight: '800px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(160,82,45,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(160,82,45,0.08) 0%, transparent 70%)',
           pointerEvents: 'none',
           zIndex: 0,
         }}
@@ -30,13 +25,14 @@ export default function NadijodtheshmPage() {
       <div className="max-w-5xl mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="text-center mb-20">
-          <motion.h1 
+          <motion.h2 
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             style={{ 
               fontFamily: 'DxLactos, "Playfair Display", serif',
-              fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
+              fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
               fontWeight: 800,
               lineHeight: 1.05,
               color: 'var(--cashmere)',
@@ -44,14 +40,15 @@ export default function NadijodtheshmPage() {
               marginBottom: '1.5rem',
             }}
           >
-            Nadijodtheshm<br />
+            Ancient Insight.<br />
             <em style={{ fontStyle: 'italic', color: 'var(--sienna-light)', fontWeight: 600 }}>
-              Consultation
+              Personal Guidance
             </em>
-          </motion.h1>
+          </motion.h2>
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.6 }}
             className="w-24 h-px mx-auto"
             style={{ background: 'var(--sienna)' }}
@@ -104,7 +101,8 @@ export default function NadijodtheshmPage() {
         {/* Content Feature Flipper */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.4, duration: 0.8 }}
           className="mb-20"
         >
@@ -146,7 +144,8 @@ export default function NadijodtheshmPage() {
         {/* Trust Line */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.7, duration: 0.6 }}
           className="text-center mb-16 px-4 max-w-3xl mx-auto"
         >
@@ -158,7 +157,8 @@ export default function NadijodtheshmPage() {
         {/* CTA */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.8, duration: 0.6 }}
           className="text-center"
         >
@@ -172,6 +172,7 @@ export default function NadijodtheshmPage() {
           </a>
         </motion.div>
       </div>
-    </div>
+    </section>
   )
 }
+

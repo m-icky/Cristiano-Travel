@@ -8,14 +8,14 @@ import Navigation from './components/Navigation'
 import ScrollProgress from './components/ScrollProgress'
 import VideoScrollSection from './components/VideoScrollSection'
 import FounderSection from './components/FounderSection'
+import ScrollGridSection from './components/ScrollGridSection'
 import TimelineSection from './components/TimelineSection'
+import NadijodtheshmSection from './components/NadijodtheshmSection'
 import QuoteSection from './components/QuoteSection'
 import GallerySection from './components/GallerySection'
-import CTASection from './components/CTASection'
-import ContactSection from './components/ContactSection'
+import ConnectSection from './components/ConnectSection'
 import Footer from './components/Footer'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
-import NadijodtheshmPage from './components/NadijodtheshmPage'
 import { Routes, Route } from 'react-router-dom'
 
 import useCursor from './hooks/useCursor'
@@ -66,14 +66,14 @@ export default function App() {
                 <>
                   <VideoScrollSection />
                   <FounderSection />
+                  <ScrollGridSection />
+                  <NadijodtheshmSection />
                   <TimelineSection />
                   <QuoteSection />
-                  <GallerySection />
-                  <CTASection />
-                  <ContactSection />
+                  {/* <GallerySection /> */}
+                  <ConnectSection />
                 </>
               } />
-              <Route path="/nadijodtheshm" element={<NadijodtheshmPage />} />
             </Routes>
           </main>
 

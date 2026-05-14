@@ -4,8 +4,9 @@ import gsap from 'gsap'
 import { useNavigate, useLocation } from 'react-router-dom'
 import logoImg from '../assets/Trans-logo.png';
 const navLinks = [
-  { label: 'Journey', href: '#journey' },
   { label: 'Founder', href: '#founder' },
+  { label: 'Nadijodtheshm', href: '#nadijodtheshm' },
+  { label: 'Journey', href: '#journey' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Contact', href: '#cta' },
 ]

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import logoImg from '../assets/Trans-logo.png'
+import footerBg from '../assets/footer-bg.svg'
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -61,12 +62,26 @@ export default function Footer() {
   return (
     <footer
       style={{
-        background: '#0D0B09',
+        backgroundColor: '#1A1A1A', // Matches SVG top fill
         borderTop: '1px solid rgba(200,169,126,0.1)',
         padding: 'clamp(3rem, 6vw, 5rem) 0 2rem',
         position: 'relative',
       }}
     >
+
+       <div
+        style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: `url(${footerBg})`,
+        backgroundSize: '100% auto',
+        backgroundPosition: 'bottom center',
+        backgroundRepeat: 'no-repeat',
+        opacity: 0.2, // Adjust opacity here
+        zIndex: 0,
+        }}
+      />
+
       {/* Top gradient line */}
       <div
         style={{
