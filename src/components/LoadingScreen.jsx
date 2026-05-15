@@ -58,7 +58,7 @@ export default function LoadingScreen({ onComplete }) {
           className="font-display italic"
           style={{
             fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-            color: 'var(--cashmere)',
+            color: 'var(--oak)',
             fontWeight: 400,
             lineHeight: 1.1,
           }}

@@ -64,7 +64,7 @@ export default function GallerySection() {
     <section
       id="gallery"
       style={{
-        background: '#111',
+        background: 'transparent',
         position: 'relative',
       }}
     >

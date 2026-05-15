@@ -16,7 +16,8 @@ import GallerySection from './components/GallerySection'
 import ConnectSection from './components/ConnectSection'
 import Footer from './components/Footer'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
-import { Routes, Route } from 'react-router-dom'
+import LavaLampBackground from './components/LavaLampBackground'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 import useCursor from './hooks/useCursor'
 import useLenis from './hooks/useLenis'
@@ -26,7 +27,20 @@ gsap.registerPlugin(ScrollTrigger)
 export default function App() {
   const [loading, setLoading] = useState(true)
   const { dotRef, ringRef } = useCursor()
+  const navigate = useNavigate()
   useLenis()
+
+  useEffect(() => {
+    // Reset to start path on refresh/load
+    if (window.location.pathname !== '/') {
+      navigate('/', { replace: true })
+    }
+    window.scrollTo(0, 0)
+    // Force history reset to prevent browser scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+  }, [navigate])
 
   useEffect(() => {
     // Prevent scroll during loading
@@ -46,6 +60,9 @@ export default function App() {
       {/* Custom cursor */}
       <div ref={dotRef} className="cursor-dot" />
       <div ref={ringRef} className="cursor-ring" />
+
+      {/* LavaLamp Background */}
+      <LavaLampBackground />
 
       {/* Loading screen */}
       <AnimatePresence>

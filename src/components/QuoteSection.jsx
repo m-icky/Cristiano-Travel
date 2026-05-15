@@ -93,7 +93,7 @@ export default function QuoteSection() {
         position: 'relative',
         padding: 'clamp(6rem, 12vw, 12rem) 0',
         overflow: 'hidden',
-        background: 'var(--charcoal)',
+        background: 'transparent',
       }}
     >
       {/* Background gradient */}
@@ -102,7 +102,7 @@ export default function QuoteSection() {
         style={{
           position: 'absolute',
           inset: '-10%',
-          background: 'linear-gradient(180deg, var(--charcoal) 0%, #1F1A16 100%)',
+          background: 'transparent',
         }}
       />
 
@@ -186,12 +186,12 @@ export default function QuoteSection() {
           style={{
             opacity: 0,
             fontSize: 'clamp(0.9rem, 1.3vw, 1.05rem)',
-            color: 'rgba(232,220,200,0.55)',
+            color: '#8B4513',
             lineHeight: 1.9,
             fontStyle: 'italic',
             fontFamily: '"Cormorant Garamond", serif',
             marginBottom: '2.5rem',
-            fontWeight: 300,
+            fontWeight: 600,
           }}
         >
           Our goal is not just to take you somewhere new —<br />

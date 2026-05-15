@@ -48,7 +48,7 @@ export default function TimelineSection() {
   }))
 
   return (
-    <section id="journey" style={{ background: 'rgb(17, 17, 17)', position: 'relative', padding: '120px 0' }}>
+    <section id="journey" style={{ background: 'transparent', position: 'relative', padding: '120px 0' }}>
       <div className="text-center relative z-10 mb-12">
         <div className="flex items-center justify-center gap-3 mb-4" style={{ opacity: 0.6 }}>
           <span style={{ display: 'block', width: '2rem', height: '1px', background: 'var(--sienna)' }} />
@@ -72,7 +72,7 @@ export default function TimelineSection() {
         <p
           style={{
             fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
-            color: 'rgba(232,220,200,0.5)',
+            color: 'var(--cashmere)',
             fontWeight: 300,
             fontStyle: 'italic',
             fontFamily: '"Cormorant Garamond", serif',

@@ -14,7 +14,7 @@
   --sienna-dark: #8B4513;
   --sienna-light: #C4693A;
   --oak: #C8A97E;
-  --cashmere: #E8DCC8;
+  --cashmere: #1a1a1a;
   --bush: #1B3A2D;
   --bush-dark: #122B21;
   --charcoal: #1A1A1A;
@@ -34,8 +34,8 @@ html {
 }
 
 body {
-  background-color: var(--charcoal);
-  color: var(--cashmere);
+  background: linear-gradient(-206deg, #FAF6EE 0%, #E8DCC8 100%);
+  color: var(--charcoal);
   font-family: 'DM Sans', sans-serif;
   overflow-x: hidden;
   cursor: none;
@@ -155,14 +155,22 @@ body::before {
 section {
   position: relative;
   overflow: visible;
+  background: transparent !important;
 }
 
 /* Glassmorphism */
 .glass {
-  background: rgba(200, 169, 126, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(200, 169, 126, 0.15);
+    padding: clamp(2rem, 4vw, 4rem);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: rgba(139, 69, 19, 0.08) 0px 20px 40px;
+    translate: none;
+    rotate: none;
+    scale: none;
+    opacity: 1;
+    transform: translate(0px, 0px);
 }
 
 /* Text mask animation */
@@ -186,7 +194,7 @@ section {
   letter-spacing: 0.08em;
   font-size: 0.75rem;
   text-transform: uppercase;
-  color: var(--cashmere);
+  color: white;
   opacity: 0.75;
   transition: opacity 0.3s;
 }
@@ -229,8 +237,11 @@ section {
   transition: transform 0.4s ease;
   z-index: -1;
 }
-.btn-luxury:hover::before { transform: translateX(0); }
-.btn-luxury:hover { border-color: var(--sienna); }
+.btn-luxury:hover::before { transform: translateX(0);}
+.btn-luxury:hover { 
+  border-color: var(--sienna);   
+  color: var(--oak) !important;
+}
 
 .btn-luxury-filled {
   background: var(--sienna);
@@ -303,8 +314,26 @@ section {
 /* Video scroll section */
 .video-scroll-section {
   position: relative;
-  background: var(--charcoal);
+  background: transparent;
   overflow: visible;
+}
+
+/* LavaLamp Background */
+.lavalamp-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#lavalamp-canvas {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
 }
 
 /* Frame container */
@@ -324,4 +353,33 @@ section {
   object-fit: cover;
   position: absolute;
   inset: 0;
+}
+
+.nadijodtheshm-intro {
+  padding: clamp(2rem, 4vw, 4rem);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: rgba(139, 69, 19, 0.08) 0px 20px 40px;
+  translate: none;
+  rotate: none;
+  scale: none;
+  opacity: 1;
+  transform: translate(0px, 0px);
+  margin-bottom: 2rem;
+}
+
+/* 3D Utilities for Flip Cards */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }

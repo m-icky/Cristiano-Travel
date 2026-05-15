@@ -409,7 +409,7 @@ export default function VideoScrollSection() {
                 fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
                 fontWeight: 800,
                 lineHeight: 1.05,
-                color: 'var(--cashmere)',
+                color: 'var(--oak)',
                 letterSpacing: '-0.01em',
                 marginBottom: '1.5rem',
               }}
@@ -448,6 +448,7 @@ export default function VideoScrollSection() {
                   document.querySelector('#founder')?.scrollIntoView({ behavior: 'smooth' })
                 }}
                 className="btn-luxury btn-luxury-filled"
+                style={{ color:"var(--oak)" }}
               >
                 Explore Her Journey
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -461,6 +462,7 @@ export default function VideoScrollSection() {
                   document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' })
                 }}
                 className="btn-luxury"
+                style={{ color:"var(--oak)" }}
               >
                 Start Your Journey
               </a>

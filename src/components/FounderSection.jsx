@@ -3,24 +3,26 @@ import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import founderImg from '../assets/cristiano.jpg'
+import BloomingFlower from './BloomingFlower'
+import { PiGraduationCap, PiGlobe, PiSparkle } from 'react-icons/pi'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const cards = [
   {
-    icon: '✦',
+    icon: <PiGraduationCap />,
     title: 'Global Student Guidance',
     text: 'Helping students confidently begin international education journeys.',
     accent: 'var(--sienna-light)',
   },
   {
-    icon: '◈',
+    icon: <PiGlobe />,
     title: 'Authentic India Experiences',
     text: 'Curated spiritual, cultural, wellness, and heritage travel programs.',
     accent: 'var(--gold)',
   },
   {
-    icon: '◇',
+    icon: <PiSparkle />,
     title: 'Nadijodtheshm Consultations',
     text: 'Ancient guidance practices integrated with modern wellness journeys.',
     accent: 'var(--oak)',
@@ -112,15 +114,30 @@ export default function FounderSection() {
       ref={sectionRef}
       id="founder"
       style={{
-        background: 'linear-gradient(180deg, var(--charcoal) 0%, #1F1A16 100%)',
+        background: 'transparent',
         padding: 'clamp(5rem, 10vw, 10rem) 0',
         position: 'relative',
+        overflow: 'hidden',
       }}
     >
+      {/* Background Blooming Flower */}
+      <div style={{
+        position: 'absolute',
+        right: '0',
+        top: '10%',
+        width: '100%',
+        height: '100%',
+        opacity: 0.35,
+        pointerEvents: 'none',
+        zIndex: 0
+      }}>
+        <BloomingFlower />
+      </div>
+
       {/* Decorative top line */}
       <div style={{ width: '100%', height: '1px', background: 'linear-gradient(90deg, transparent, var(--gold), transparent)', marginBottom: '6rem' }} />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-12" style={{ position: 'relative', zIndex: 1 }}>
         {/* Section Label */}
         <div
           className="flex items-center gap-3 mb-4"
@@ -205,7 +222,7 @@ export default function FounderSection() {
               <div style={{ fontSize: '1.6rem', fontFamily: '"Playfair Display", serif', fontWeight: 700, color: 'var(--cashmere)' }}>
                 8+
               </div>
-              <div style={{ fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--oak)' }}>
+              <div style={{ fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--cashmere)' }}>
                 Years of Experience
               </div>
             </motion.div>
@@ -235,7 +252,7 @@ export default function FounderSection() {
                 style={{
                   fontSize: '0.8rem',
                   letterSpacing: '0.08em',
-                  color: 'var(--gold)',
+                  color: '#8B4513',
                   fontFamily: 'DM Sans',
                   fontStyle: 'italic',
                   opacity: 0.8,
@@ -261,7 +278,7 @@ export default function FounderSection() {
                   style={{
                     fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
                     lineHeight: 1.85,
-                    color: 'rgba(232,220,200,0.7)',
+                    color: '#8B4513',
                     fontWeight: 300,
                     transform: 'translateY(100%)',
                     opacity: 0,
@@ -302,7 +319,7 @@ export default function FounderSection() {
                 style={{
                   fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)',
                   lineHeight: 1.85,
-                  color: 'rgba(232,220,200,0.7)',
+                  color: '#8B4513',
                   fontWeight: 300,
                   transform: 'translateY(100%)',
                   opacity: 0,
@@ -323,7 +340,7 @@ export default function FounderSection() {
                   style={{
                     opacity: 0,
                     padding: '1.5rem 1.25rem',
-                    borderRadius: '4px',
+                    borderRadius: '15px',
                     cursor: 'default',
                   }}
                 >
@@ -351,7 +368,7 @@ export default function FounderSection() {
                   <p
                     style={{
                       fontSize: '0.78rem',
-                      color: 'rgba(232,220,200,0.55)',
+                      color: '#8B4513',
                       lineHeight: 1.6,
                     }}
                   >

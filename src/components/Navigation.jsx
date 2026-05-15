@@ -3,11 +3,12 @@ import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { useNavigate, useLocation } from 'react-router-dom'
 import logoImg from '../assets/Trans-logo.png';
+import { filter } from 'framer-motion/client';
 const navLinks = [
   { label: 'Founder', href: '#founder' },
+  { label: 'Gallery', href: '#gallery' },
   { label: 'Nadijodtheshm', href: '#nadijodtheshm' },
   { label: 'Journey', href: '#journey' },
-  { label: 'Gallery', href: '#gallery' },
   { label: 'Contact', href: '#cta' },
 ]
 
@@ -28,21 +29,29 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const handleAnchor = (e, href) => {
-    e.preventDefault()
+  const handleAnchor = (e, href, callback) => {
+    if (e) e.preventDefault()
+    
+    // If a callback (like setOpen(false)) is provided, call it
+    if (callback) callback()
+
     if (location.pathname !== '/') {
-      window.location.href = '/' + href;
-      return;
+      navigate('/' + href)
+      return
     }
+
     const el = document.querySelector(href)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    if (el) {
+      // Use a small timeout to let the mobile menu close animation begin
+      // This prevents layout shifts from interrupting the scroll
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: 'smooth' })
+      }, 50)
+    }
   }
 
   /* ── glass style objects ── */
   const glassBase = {
-    background: scrolled
-      ? 'rgba(22, 20, 17, 0.55)'
-      : 'rgba(22, 20, 17, 0.25)',
     backdropFilter: 'blur(18px) saturate(1.6)',
     WebkitBackdropFilter: 'blur(18px) saturate(1.6)',
     border: '1px solid rgba(200, 169, 126, 0.12)',
@@ -50,7 +59,7 @@ export default function Navigation() {
     boxShadow: scrolled
       ? '0 4px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04)'
       : '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06)',
-    transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+    transition: 'all 1s cubic-bezier(0.22, 1, 0.36, 1)',
   }
 
   return (
@@ -78,6 +87,7 @@ export default function Navigation() {
               width: 'auto',
               display: 'block',
               cursor: 'pointer',
+              filter: 'brightness(2) invert(1)'
             }}
             onClick={(e) => handleAnchor(e, '#home')}
           />
@@ -90,7 +100,7 @@ export default function Navigation() {
                 href={link.href}
                 className="nav-link"
                 onClick={(e) => handleAnchor(e, link.href)}
-                style={{ fontSize: '0.8rem' }}
+                style={{ fontSize: '0.8rem', color: "var(--cashmere)", fontWeight: "600" }}
               >
                 {link.label}
               </a>
@@ -102,7 +112,7 @@ export default function Navigation() {
             href="#cta"
             onClick={(e) => handleAnchor(e, '#cta')}
             className="btn-luxury btn-luxury-filled !hidden md:!inline-flex text-xs"
-            style={{ padding: '0.55rem 1.4rem' }}
+            style={{ padding: '0.55rem 1.4rem', color: "var(--oak)" }}
           >
             Start Journey
           </a>
@@ -186,7 +196,7 @@ function MobileMenu({ navLinks, handleAnchor }) {
               key={link.label}
               href={link.href}
               className="nav-link text-sm"
-              onClick={(e) => { setOpen(false); handleAnchor(e, link.href) }}
+              onClick={(e) => handleAnchor(e, link.href, () => setOpen(false))}
             >
               {link.label}
             </a>
@@ -194,9 +204,9 @@ function MobileMenu({ navLinks, handleAnchor }) {
           <div className="pt-2 mt-2 border-t border-[rgba(200,169,126,0.15)] flex">
             <a
               href="#cta"
-              onClick={(e) => { setOpen(false); handleAnchor(e, '#cta') }}
+              onClick={(e) => handleAnchor(e, '#cta', () => setOpen(false))}
               className="btn-luxury btn-luxury-filled w-full flex justify-center text-sm"
-              style={{ padding: '0.8rem 1.4rem' }}
+              style={{ padding: '0.8rem 1.4rem', color: "var(--oak)" }}
             >
               Start Journey
             </a>

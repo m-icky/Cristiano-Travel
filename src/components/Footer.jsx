@@ -1,12 +1,21 @@
 import { motion } from 'framer-motion'
 import logoImg from '../assets/Trans-logo.png'
 import footerBg from '../assets/footer-bg.svg'
+import { 
+  PiInstagramLogo, 
+  PiWhatsappLogo, 
+  PiFacebookLogo, 
+  PiEnvelopeSimple, 
+  PiPhone, 
+  PiMapPin 
+} from 'react-icons/pi'
 
 const navLinks = [
   { label: 'Home', href: '#home' },
   { label: 'Founder', href: '#founder' },
-  { label: 'Journey', href: '#journey' },
   { label: 'Gallery', href: '#gallery' },
+  { label: 'Nadijodtheshm', href: '#nadijodtheshm' },
+  { label: 'Journey', href: '#journey' },
   { label: 'Contact', href: '#cta' },
 ]
 
@@ -14,41 +23,22 @@ const socialLinks = [
   {
     label: 'Instagram',
     href: '#',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5"/>
-        <circle cx="12" cy="12" r="4"/>
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-      </svg>
-    ),
+    icon: <PiInstagramLogo size={20} />,
   },
   {
     label: 'WhatsApp',
     href: '#',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
-      </svg>
-    ),
+    icon: <PiWhatsappLogo size={20} />,
   },
   {
     label: 'Facebook',
     href: '#',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
-      </svg>
-    ),
+    icon: <PiFacebookLogo size={20} />,
   },
   {
     label: 'Email',
     href: 'mailto:hello@cristianotravel.com?subject=Inquiry via Website&body=Hello Cristiano Travel Team,%0D%0A%0D%0A[Please write your message here]%0D%0A%0D%0AName: %0D%0AContact Number: %0D%0A',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-        <polyline points="22,6 12,13 2,6"/>
-      </svg>
-    ),
+    icon: <PiEnvelopeSimple size={20} />,
   },
 ]
 
@@ -62,7 +52,7 @@ export default function Footer() {
   return (
     <footer
       style={{
-        backgroundColor: '#1A1A1A', // Matches SVG top fill
+        backgroundColor: 'rgb(178 132 80)', // Matches SVG top fill
         borderTop: '1px solid rgba(200,169,126,0.1)',
         padding: 'clamp(3rem, 6vw, 5rem) 0 2rem',
         position: 'relative',
@@ -98,43 +88,44 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-12">
 
           {/* Brand column */}
-          <div>
-            <div className="flex items-center gap-3 mb-5">
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="flex items-center gap-3 mb-6">
               <img
                 src={logoImg}
                 alt="Cristiano Travel Logo"
                 style={{
-                  height: '42px',
+                  height: '52px',
                   width: 'auto',
                   display: 'block',
+                  filter: 'brightness(0) invert(1)',
                 }}
                 onClick={(e) => handleAnchor(e, '#home')}
               />
             </div>
             <p
               style={{
-                fontSize: '0.83rem',
-                color: 'rgba(232,220,200,0.45)',
-                lineHeight: 1.8,
+                fontSize: '1.05rem',
+                color: 'hsla(0, 0%, 100%, 0.9)',
+                lineHeight: 1.7,
                 fontWeight: 300,
-                maxWidth: '260px',
-                marginBottom: '1.5rem',
+                maxWidth: '320px',
+                marginBottom: '2rem',
               }}
             >
               Guiding journeys that transform lives through authentic India experiences and traditional wellness.
             </p>
 
             {/* Socials */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-5">
               {socialLinks.map((social) => (
                 <motion.a
                   key={social.label}
                   href={social.href}
-                  whileHover={{ y: -3, color: 'var(--sienna-light)' }}
+                  whileHover={{ y: -3, color: 'var(--oak)' }}
                   transition={{ duration: 0.2 }}
                   aria-label={social.label}
                   style={{
-                    color: 'rgba(200,169,126,0.5)',
+                    color: 'rgba(255, 255, 255, 1)',
                     cursor: 'none',
                     padding: '0.4rem',
                   }}
@@ -146,26 +137,32 @@ export default function Footer() {
           </div>
 
           {/* Navigation */}
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <h4
               style={{
-                fontSize: '0.65rem',
-                letterSpacing: '0.3em',
+                fontSize: '0.9rem',
+                letterSpacing: '0.2em',
                 textTransform: 'uppercase',
-                color: 'var(--oak)',
+                color: 'white',
                 marginBottom: '1.5rem',
+                fontWeight: 600,
               }}
             >
               Navigation
             </h4>
-            <div className="flex flex-col gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-y-4 text-center md:text-left">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleAnchor(e, link.href)}
                   className="nav-link"
-                  style={{ width: 'fit-content' }}
+                  style={{ 
+                    fontSize: '1rem',
+                    textTransform: 'none',
+                    letterSpacing: '0.02em',
+                    opacity: 0.9
+                  }}
                 >
                   {link.label}
                 </a>
@@ -173,66 +170,70 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4
-              style={{
-                fontSize: '0.65rem',
-                letterSpacing: '0.3em',
-                textTransform: 'uppercase',
-                color: 'var(--oak)',
-                marginBottom: '1.5rem',
-              }}
-            >
-              Contact
-            </h4>
-            <div className="flex flex-col gap-4">
-              {[
-                { icon: '✉', text: 'hello@cristianotravel.com', href: 'mailto:hello@cristianotravel.com?subject=Inquiry via Website&body=Hello Cristiano Travel Team,%0D%0A%0D%0A[Please write your message here]%0D%0A%0D%0AName: %0D%0AContact Number: %0D%0A' },
-                { icon: '☎', text: '+91 XXXXX XXXXX', href: 'tel:+91XXXXXXXXXX' },
-                { icon: '◈', text: 'Kerala, India', href: '#' },
-              ].map((contact) => (
-                <a
-                  key={contact.text}
-                  href={contact.href}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    color: 'rgba(232,220,200,0.5)',
-                    fontSize: '0.83rem',
-                    cursor: 'none',
-                    transition: 'color 0.3s',
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--cashmere)'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(232,220,200,0.5)'}
-                >
-                  <span style={{ color: 'var(--sienna-light)', fontSize: '0.9rem' }}>{contact.icon}</span>
-                  {contact.text}
-                </a>
-              ))}
+          {/* Contact & Services */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-12 md:gap-8">
+            <div className="flex flex-col items-center md:items-start text-center md:text-left">
+              <h4
+                style={{
+                  fontSize: '0.9rem',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: 'white',
+                  marginBottom: '1.5rem',
+                  fontWeight: 600,
+                }}
+              >
+                Contact
+              </h4>
+              <div className="flex flex-col gap-5">
+                {[
+                  { icon: <PiEnvelopeSimple />, text: 'hello@cristianotravel.com', href: 'mailto:hello@cristianotravel.com?subject=Inquiry via Website&body=Hello Cristiano Travel Team,%0D%0A%0D%0AName: %0D%0AContact Number: %0D%0A' },
+                  { icon: <PiPhone />, text: '+91 XXXXX XXXXX', href: 'tel:+91XXXXXXXXXX' },
+                  { icon: <PiMapPin />, text: 'Kerala, India', href: '#' },
+                ].map((contact) => (
+                  <a
+                    key={contact.text}
+                    href={contact.href}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '1rem',
+                      cursor: 'none',
+                      transition: 'color 0.3s',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = 'var(--oak)'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}
+                  >
+                    <span style={{ color: '#ffffff', fontSize: '1.2rem', display: 'flex' }}>{contact.icon}</span>
+                    {contact.text}
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Services quick links */}
-            <div style={{ marginTop: '2rem' }}>
+            <div className="flex flex-col items-center md:items-start text-center md:text-left">
               <h4
                 style={{
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.3em',
+                  fontSize: '0.9rem',
+                  letterSpacing: '0.2em',
                   textTransform: 'uppercase',
-                  color: 'var(--oak)',
-                  marginBottom: '1rem',
+                  color: 'white',
+                  marginBottom: '1.5rem',
+                  fontWeight: 600,
                 }}
               >
                 Services
               </h4>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
                 {['India Travel Programs', 'Student Guidance', 'Nadijodtheshm Consultation', 'Wellness Journeys'].map((s) => (
                   <span
                     key={s}
                     style={{
-                      fontSize: '0.78rem',
-                      color: 'rgba(232,220,200,0.35)',
+                      fontSize: '1rem',
+                      color: 'rgba(255, 255, 255, 0.8)',
                       lineHeight: 1.5,
                     }}
                   >
@@ -247,30 +248,31 @@ export default function Footer() {
         {/* Bottom bar */}
         <div
           style={{
-            borderTop: '1px solid rgba(200,169,126,0.08)',
-            paddingTop: '2rem',
+            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+            paddingTop: '2.5rem',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '0.5rem',
+            gap: '0.75rem',
             textAlign: 'center',
           }}
         >
           <p
             style={{
-              fontSize: '0.7rem',
-              color: 'rgba(200,169,126,0.3)',
-              letterSpacing: '0.1em',
+              fontSize: '0.9rem',
+              color: 'rgba(255, 255, 255, 0.6)',
+              letterSpacing: '0.05em',
             }}
           >
             © {new Date().getFullYear()} Cristiano Travel. All rights reserved.
           </p>
           <p
             style={{
-              fontSize: '0.65rem',
-              color: 'rgba(200,169,126,0.2)',
-              letterSpacing: '0.2em',
+              fontSize: '0.8rem',
+              color: 'rgba(255, 255, 255, 0.4)',
+              letterSpacing: '0.3em',
               textTransform: 'uppercase',
+              fontWeight: 500,
             }}
           >
             India · Wellness · Transformation · Spirituality
