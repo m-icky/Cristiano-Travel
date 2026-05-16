@@ -2,6 +2,21 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './ScrollGridSection.css';
+import scalerMain from '../assets/main-scale.png'
+import img1 from "../assets/1.JPG";
+import img2 from "../assets/2.jpg";
+import img3 from "../assets/3.jpg";
+import img4 from "../assets/4.jpg";
+import img5 from "../assets/5.jpg";
+import img6 from "../assets/6.JPG";
+import img7 from "../assets/7.JPG";
+import img8 from "../assets/8.JPG";
+import img9 from "../assets/9.JPG";
+import img10 from "../assets/10.jpg";
+import img11 from "../assets/11.JPG";
+import img12 from "../assets/12.jpeg";
+import img13 from "../assets/13.png";
+import img14 from "../assets/14.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -102,57 +117,57 @@ export default function ScrollGridSection() {
               {/* Layer 1: Outer edges (6 images) */}
               <div className="layer">
                 <div>
-                  <img src="https://images.unsplash.com/photo-1463100099107-aa0980c362e6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img1} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1556304044-0699e31c6a34?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img2} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1590330297626-d7aff25a0431?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img3} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img4} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img5} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1565321590372-09331b9dd1eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img6} alt="" />
                 </div>
               </div>
               {/* Layer 2: Inner columns (6 images) */}
               <div className="layer">
                 <div>
-                  <img src="https://images.unsplash.com/photo-1531525645387-7f14be1bdbbd?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img7} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1637414165749-9b3cd88b8271?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img8} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1699911251220-8e0de3b5ce88?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img9} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1667483629944-6414ad0648c5?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img10} alt="" />
                 </div>
                 <div>
-                  <img src="https://plus.unsplash.com/premium_photo-1706078438060-d76ced26d8d5?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img11} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1525385444278-b7968e7e28dc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img12} alt="" />
                 </div>
               </div>
               {/* Layer 3: Center column top and bottom (2 images) */}
               <div className="layer">
                 <div>
-                  <img src="https://images.unsplash.com/reserve/LJIZlzHgQ7WPSh5KVTCB_Typewriter.jpg?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img13} alt="" />
                 </div>
                 <div>
-                  <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="" />
+                  <img src={img14} alt="" />
                 </div>
               </div>
               {/* Center scaler image */}
               <div className="scaler">
-                <img src="https://assets.codepen.io/605876/model-shades.jpg?format=auto&quality=100" alt="" />
+                <img src={scalerMain} alt="" />
               </div>
             </div>
           </div>
