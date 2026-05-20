@@ -1,0 +1,120 @@
+# Cristiano Travel — Luxury Personal Brand Website
+
+> A high-end, scroll-driven luxury travel & wellness brand website built with React, Vite, GSAP, Framer Motion, Three.js, and Tailwind CSS.
+
+This file serves as a comprehensive reference guide for LLMs and developers. It details the project's technical stack, core architecture, design system tokens, component APIs, state management, and critical development guidelines.
+
+---
+
+## Technical Stack
+
+- **Core Framework**: React 18.2 (Vite-powered SPA)
+- **Routing**: React Router DOM (v7)
+- **Smooth Scroll**: Lenis (Studio Freight) for buttery-smooth kinetic scrolling
+- **Animations & Pinning**: GSAP 3.12 (ScrollTrigger, Custom Ease)
+- **Transitions & Micro-interactions**: Framer Motion 11
+- **Graphics & Background Effects**: Three.js 0.165 (custom particle fields)
+- **Styling**: Tailwind CSS v3, PostCSS, Sass/SCSS (used for custom animations)
+- **Icons**: React Icons (v5)
+
+---
+
+## Architecture & Layout Flow
+
+The application is structured as a cinematic storytelling experience. It features an interactive initial load and is organized around a main landing layout:
+
+1. **Cinematic Loading Screen (`LoadingScreen.jsx`)**: Holds scroll lock (`body.style.overflow = 'hidden'`), increments an elegant frame percentage counter, and triggers page reveal.
+2. **Scroll Restoration & Routing (`App.jsx`)**: Resets the route to `/` on refresh, sets manual scroll restoration to avoid browser jumps, and initializes `ScrollTrigger` updates once loading is complete.
+3. **Smooth Scroll Engine (`useLenis.js`)**: Couples standard DOM scroll actions with Lenis, creating responsive momentum-based scrolling.
+4. **Custom Cursor Context (`useCursor.js`)**: Tracks coordinate coordinates to animate a sleek, luxury ring-and-dot cursor (`.cursor-dot`, `.cursor-ring`) that responds dynamically to hover targets.
+
+---
+
+## Design System & Styling Tokens
+
+The visual style represents absolute premium luxury. Design styling is governed by custom tailwind configurations and localized variables.
+
+### Color Palette
+
+| Name | Hex Value | Semantic Usage |
+| :--- | :--- | :--- |
+| **Sienna** | `#A0522D` | Primary accent, luxury CTAs, highlights |
+| **Sienna Light** | `#C4693A` | Hover states for primary accents |
+| **Sienna Dark** | `#8B4513` | Deep contrasting primary accents |
+| **Oak** | `#C8A97E` | Secondary luxury accent, delicate borders, timelines |
+| **Cashmere** | `#E8DCC8` | Sophisticated text, body contrast, off-whites |
+| **Ivory** | `#FAF6EE` | Creamy container backgrounds, light section panels |
+| **Bush** | `#1B3A2D` | Rich dark green accent, organic nature theme contrast |
+| **Bush Dark** | `#122B21` | Deep background dark green accent |
+| **Charcoal** | `#1A1A1A` | Main theme background, high contrast dark blocks |
+| **Gold** | `#C4A55A` | Golden highlights, premium timeline nodes, special accents |
+
+### Typography
+
+- **Display Serif** (`font-display`): `"Playfair Display"`, Georgia, serif — Used for grand hero titles and massive editorial headers.
+- **Editorial Serif** (`font-heading`): `"Cormorant Garamond"`, serif — Used for sub-headers, quotes, and narrative section titles.
+- **Modern Sans** (`font-body`): `"DM Sans"`, sans-serif — Used for clean, highly legible body copy, descriptions, and buttons.
+- **Accent Serif** (`font-accent`): `"Libre Baskerville"`, serif — Used for subtle italics, footnotes, and decorative tags.
+
+---
+
+## File Directory & Component Details
+
+### `src/components/`
+
+- **`LoadingScreen.jsx`**: Count-up loader from 0% to 100% animating path shapes, and locking browser view until initialization.
+- **`Navigation.jsx`**: Glassmorphism navbar pinned at the top. Dynamically expands into a fullscreen luxury mobile menu on click.
+- **`ScrollProgress.jsx`**: Thin horizontal indicator tracking the scroll position at the top of the viewport.
+- **`VideoScrollSection.jsx`**: Advanced frame-sequence engine. Preloads images under `/public/frames/` and uses canvas context + GSAP ScrollTrigger to play them smoothly as a video while pinning the section. Integrates a gradient fallback.
+- **`FounderSection.jsx`**: Sophisticated biography panel featuring overlapping cards, custom photo grid overlays, and text reveals.
+- **`BloomingFlower.jsx`**: Beautiful CSS-only geometric animated blooming flower component. Uses a scroll-bound `IntersectionObserver` to trigger a premium SVG path opening sequence.
+  - **`BloomingFlower.scss`**: Handles keyframe rules, rotating petals, and rich layered gradients for the flower animations.
+- **`ScrollGridSection.jsx`**: Rich grid showcasing key destinations or values with scroll-tied offsets, generating a delicate parallax shift.
+- **`DiploFlipCard.jsx`**: 3D interactive flip card components reacting to mouse entries with custom rotation styles and CSS Perspective rules.
+- **`NadijodtheshmSection.jsx`**: High-end consulting block featuring a 3-column interactive layout, standardizing customized iconography and flip cards.
+- **`TimelineSection.jsx`**: Alternating chronological timeline showing key milestones. Animated node lines reveal themselves progressively as the page is scrolled.
+- **`QuoteSection.jsx`**: High-contrast, full-width atmospheric section displaying a central brand philosophy with floating ambient particles.
+- **`GallerySection.jsx`**: GSAP-pinned horizontal scrolling gallery grid containing brand and travel snapshots.
+- **`ConnectSection.jsx`**: Deluxe contact form featuring animated input underscores, interactive text elements, and smooth response interactions.
+- **`Footer.jsx`**: Balanced multi-column footer displaying site directories, custom social iconography, and responsive scaling.
+- **`FloatingWhatsApp.jsx`**: Non-intrusive floating contact node displaying a custom SVG and providing direct chat links.
+- **`LavaLampBackground.jsx`**: (Unused) Previously rendered organic bubble metaballs; removed in favor of a solid premium background color (`#F1EADD`) defined on the body.
+- **`ParticleField.jsx` & `FloatingParticles.jsx`**: Three.js WebGL canvas and DOM-based setups producing float-up dust/spark elements.
+- **`CinematicCardDeck.jsx`**: Multi-layered card deck displaying sliding layouts with heavy motion curves.
+- **`FocusSliceCarousel.jsx`**: Slider component applying visual masking and focus state scaling based on active indices.
+- **`FeatureFlipper.jsx`**: Split layout switching core feature text blocks as corresponding visual layers change.
+
+### `src/hooks/`
+
+- **`useCursor.js`**: Tracks cursor movement to coordinate `.cursor-dot` (precise dot) and `.cursor-ring` (smooth trailing circle). Emits event listeners to scale or highlight the ring when entering tags with `.interactive` classes.
+- **`useLenis.js`**: Initializes Lenis, configures custom scrolling speeds, and bounds the update request loop with `requestAnimationFrame`.
+
+---
+
+## Key Development Rules & Guidelines
+
+When modifying or adding features to this codebase, strict compliance with these rules is required:
+
+### 1. Premium Visual Aesthetics & Animation
+- **Typography & Scale**: Keep typography editorial. Pair serif display headers (`Playfair Display` or `Cormorant Garamond`) with modern body spacing. Use styling utilities like `leading-relaxed` or `tracking-widest` to maintain breathing room.
+- **Color Usage**: Avoid saturated or generic colors (plain blue, plain red). Stick strictly to the custom design system colors (`sienna`, `oak`, `cashmere`, `bush`, `gold`).
+- **Interactive States**: Every link, button, card, and input must have custom interactive states (smooth scale, elegant hover border, opacity shift). Apply `transition-all duration-500 ease-out`.
+
+### 2. Scroll-Linked GSAP & Lenis Integration
+- **ScrollTrigger Lifecycles**: When introducing components that alter height or contain conditional layouts, ensure you call `ScrollTrigger.refresh()` after mounting/updating.
+- **Avoid Scroll Hijacking**: Never manually change `window.scrollTo()` without calling `lenis.scrollTo()` or setting up safe compatibility modes.
+- **Lenis Smooth Scroll Compatibility**: For vertical pins, rely on GSAP `pin: true`. Do not use manual CSS sticky rules that might mismatch the Lenis viewport calculations.
+
+### 3. Rendering Performance & Frame Preloading
+- **Image/Frame Preloads**: In components like `VideoScrollSection`, guarantee image elements are preloaded and drawn directly inside `<canvas>` to prevent frame flickering or layout shifts.
+- **Three.js Garbage Collection**: When utilizing Canvas, WebGL, or particle frames (e.g. `ParticleField.jsx`), always clean up geometries, materials, textures, and requestAnimationFrame loops in the `useEffect` cleanup hook.
+
+### 4. Custom Cursor Highlights
+- Add the `interactive` class name to any newly introduced interactive element (buttons, custom cards, anchor tags) so the luxury custom cursor (`.cursor-ring`) triggers its scale-up focus animation automatically.
+
+### 5. SEO & Crawl Optimization
+- **Single Page Heading Structure**: Maintain exactly one `<h1>` tag per page (found in `VideoScrollSection.jsx`). All subsequent major section headings should use `<h2>` or below to preserve high-value semantic hierarchies.
+- **Header Metadata & Social Sharing**: Keep standard Open Graph (`og:*`) and Twitter Card tags updated inside `index.html` alongside a valid canonical link element.
+- **Structured Data (JSON-LD)**: A comprehensive `TravelAgency` Schema.org definition is embedded inside `index.html` to generate rich search engine results and snippet cards.
+- **Robot Discovery**: `public/robots.txt` and `public/sitemap.xml` manage crawl instructions and indexable domain indexing for search bots.
+

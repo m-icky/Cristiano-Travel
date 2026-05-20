@@ -108,7 +108,7 @@ export default function ScrollGridSection() {
   return (
     <div className="content-wrap scroll-grid-section" id='gallery' ref={sectionRef}>
       <header className="scroll-grid-section-header">
-        <h1 className="scroll-grid-section-fluid">Moments & Memories</h1>
+        <h2 className="scroll-grid-section-fluid">Moments & Memories</h2>
       </header>
       <main>
         <section className="main-section" ref={mainSectionRef}>

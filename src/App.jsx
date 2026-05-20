@@ -12,11 +12,11 @@ import ScrollGridSection from './components/ScrollGridSection'
 import TimelineSection from './components/TimelineSection'
 import NadijodtheshmSection from './components/NadijodtheshmSection'
 import QuoteSection from './components/QuoteSection'
-import GallerySection from './components/GallerySection'
+// import GallerySection from './components/GallerySection'
 import ConnectSection from './components/ConnectSection'
 import Footer from './components/Footer'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
-import LavaLampBackground from './components/LavaLampBackground'
+// import LavaLampBackground from './components/LavaLampBackground'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 
 import useCursor from './hooks/useCursor'
@@ -62,7 +62,7 @@ export default function App() {
       <div ref={ringRef} className="cursor-ring" />
 
       {/* LavaLamp Background */}
-      <LavaLampBackground />
+      {/* <LavaLampBackground /> */}
 
       {/* Loading screen */}
       <AnimatePresence>

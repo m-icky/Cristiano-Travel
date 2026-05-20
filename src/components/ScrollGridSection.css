@@ -27,7 +27,7 @@
   color: var(--cashmere);
 }
 
-.scroll-grid-section-header h2.scroll-grid-section-fluid {
+.scroll-grid-section-header h1.scroll-grid-section-fluid {
   font-size: clamp(0.5rem, 2vw, 1.5rem);
   padding-top: 48px;
 }

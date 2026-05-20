@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Host & Sitemap link for crawlers
+Host: https://www.cristianotravel.com
+Sitemap: https://www.cristianotravel.com/sitemap.xml
